@@ -6,7 +6,6 @@ import javax.jms.TextMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +14,7 @@ public class ConsumerServiceImpl implements ConsumerService {
 	private final static Logger logger = LoggerFactory.getLogger(ConsumerServiceImpl.class);
 
 	@Override
-	@JmsListener(destination = "${application.activemq.queue}")
+	// @JmsListener(destination = "${application.activemq.queue1}")
 	public void receiveMessage(Message message) {
 		if (message instanceof TextMessage) {
 			TextMessage textMessage = (TextMessage) message;

@@ -16,8 +16,11 @@ public class ProducerServiceImpl implements ProducerService {
 
 	JmsTemplate jmsTemplate;
 
-	@Value("${application.activemq.queue}")
-	String queue;
+	@Value("${application.activemq.queue1}")
+	String queue1;
+
+	@Value("${application.activemq.queue2}")
+	String queue2;
 
 	@Autowired
 	ProducerServiceImpl(JmsTemplate jmsTemplate) {
@@ -29,9 +32,19 @@ public class ProducerServiceImpl implements ProducerService {
 		String content = "TODO";
 		logger.info("envoi d'un message JMS: {}", content);
 
-		jmsTemplate.send(queue, messageCreator -> {
+		jmsTemplate.send(queue1, messageCreator -> {
 			TextMessage message = messageCreator.createTextMessage();
-			message.setText(content);
+			message.setText(queue1 + " " + content);
+
+			message.setJMSPriority(9);
+
+			return message;
+		});
+
+		logger.info("envoi d'un message JMS: {}", content);
+		jmsTemplate.send(queue2, messageCreator -> {
+			TextMessage message = messageCreator.createTextMessage();
+			message.setText(queue2 + " " + content);
 
 			message.setJMSPriority(9);
 
